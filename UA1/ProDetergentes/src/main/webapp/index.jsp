@@ -32,19 +32,32 @@
          stnt = conexion.createStatement();
          
          rs = stnt.executeQuery("select producto.marca,corporacion.nombre from producto join corporacion on producto.idCorp=corporacion.idCorp");
-         
-         while(rs.next()){ 
-          out.print(rs.getString(1));
-          out.print(rs.getString(2));
-         }
-        
-    }
-    catch(IOException d){
-        out.println("No existe una base de datos");
+         %>
+         <style>table, th, td{border: 1px solid black; padding: 5px} 
+         </style>
+            <table style="white-space: 10%">
+                <tr>
+                    <th>Marca</th>
+                    <th>Corporación</th>                   
+                </tr>
+                <%
+         while(rs.next()){%>
+         <tr>
+             <td><%out.print(rs.getString(1));%></td>
+             <td><%out.print(rs.getString(2));%></td></tr><%
+         }%>
+            </table>
+         <%
     }
     catch(SQLSyntaxErrorException e){
-        out.println("Que raro");
+        out.println("La base de datos no existe");
     }
+    catch(IOException d){
+        out.println(d.getMessage());
+    }
+        
+    finally{%><br><%
+        out.println("Fin del programa");
+    }
+    
 %>
-
-
