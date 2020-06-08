@@ -57,7 +57,7 @@
     }
         
     finally{%><br><%
-        out.println("Fin del programa");
+        out.println("Fin_del_programa");
     }
     
 %>
