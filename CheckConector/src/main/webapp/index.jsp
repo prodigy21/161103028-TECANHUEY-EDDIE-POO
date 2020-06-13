@@ -23,28 +23,53 @@
         Statement stnt = null;
         ResultSet rs = null;
     try{
-         Class.forName("com.mysql.jdbc.Driver");
-         conexion = DriverManager.getConnection("jdbc:mysql://localhost/usuarios","root","");
-         stnt = conexion.createStatement();
-         rs = stnt.executeQuery("select * from usuario");
-         while(rs.next()){
-            out.print(rs.getString(1));
-            out.print(rs.getString(2));
-         }
+        Class.forName("com.mysql.jdbc.Dridver");
+        conexion = DriverManager.getConnection("jdbc:mysql://localhost/usuarios","root","");
+        stnt = conexion.createStatement();
+        rs = stnt.executeQuery("select * from usuario");
+        %>
+    <style>table, th, td{border: 1px solid black; padding: 5px}
+    </style>
+        <table style="white-space: 10%">
+            <tr>
+              <th>Id</th>
+              <th>Usuario</th>
+              <th>Contraseña</th>
+            </tr>
+<%
+        while(rs.next()){
+        %><tr>
+            <td><%out.print(rs.getString("id_usuario"));%></td>
+            <td><%out.print(rs.getString("usuario"));%></td>
+            <td><%out.print(rs.getString("password"));%></tr><%
+        }%>
+        </table>
+<%
     }
-    catch(IOException e){
-        out.print(e.getMessage());
+    catch (IOException d){
+        d.getMessage();
     }
+  
     catch(SQLSyntaxErrorException e){
-        out.print("No existe la Base de Datos");
+        out.print("No existe en la Base de ,Datos");
+    }
+
+    catch(ClassNotFoundException e){
+        out.print("Falta el jdbc.Driver o hay un problema de escritura");
+    }
+
+    catch(NullPointerException e){
+        out.println("El servidor está desactivado");
     }
     
-    catch(Exception e){
-        out.print("Es de tipo: "+ e.getMessage());
-        
+    catch(CommunicationsException e){
+        out.println("El controlador no ha recibido ningún paquete del servidor.");
     }
-    finally{%><br><%
-        out.println("Fin del programa");
+     
+    
+    
+    finally{%><br><br><%
+        out.println("Fin del programa");    
     }
 %>
     </body>
